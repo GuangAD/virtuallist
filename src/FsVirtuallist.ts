@@ -34,4 +34,21 @@ class FsVirtuallist {
     this.state.viewHeight = this.oContainer.offsetHeight;
       this.state.maxCount = Math.ceil(this.state.viewHeight / this.state.itemHeight) + 1;
   }
+
+  computedEndIndex() {
+    const end = this.startIndex + this.state.maxCount;
+    this.endIndex = this.state.dataSource[end] ? end : this.state.dataSource.length;
+  }
+
+  computedRenderList() {
+    this.renderList = this.state.dataSource.slice(this.startIndex, this.endIndex);
+  }
+
+  computedScrollStyle() {
+    const { dataSource, itemHeight } = this.state;
+    this.scrollStyle = {
+      height: `${dataSource.length * itemHeight - this.startIndex * itemHeight}px`,
+      transform: `translate3d(0, ${this.startIndex * itemHeight}px, 0)`,
+    };
+  }
 }
